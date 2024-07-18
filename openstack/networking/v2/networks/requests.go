@@ -32,6 +32,7 @@ type ListOpts struct {
 	SortKey      string `q:"sort_key"`
 	SortDir      string `q:"sort_dir"`
 	Tags         string `q:"tags"`
+	External     *bool  `q:"router:external"`
 	TagsAny      string `q:"tags-any"`
 	NotTags      string `q:"not-tags"`
 	NotTagsAny   string `q:"not-tags-any"`
