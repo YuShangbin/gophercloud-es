@@ -56,6 +56,12 @@ type Quota struct {
 
 	// LoadBalancer usage
 	LBInUse int `json:"in_use_load_balancer"`
+
+	// LoadBalancer cpu usage
+	LBInUseVcpus int `json:"in_use_vcpus"`
+
+	// LoadBalancer ram usage
+	LBInUseRam int `json:"in_use_ram"`
 }
 
 // UnmarshalJSON provides backwards compatibility to OpenStack APIs which still
