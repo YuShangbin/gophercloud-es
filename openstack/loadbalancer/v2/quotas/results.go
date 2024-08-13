@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/gophercloud/gophercloud"
+	"github.com/gophercloud/gophercloud/pagination"
 )
 
 type commonResult struct {
@@ -17,6 +18,39 @@ func (r commonResult) Extract() (*Quota, error) {
 	}
 	err := r.ExtractInto(&s)
 	return s.Quota, err
+}
+
+type QuotaPage struct {
+	pagination.LinkedPageBase
+}
+
+func (r QuotaPage) NextPageURL() (string, error) {
+	var s struct {
+		Links []gophercloud.Link `json:"quota_links"`
+	}
+	err := r.ExtractInto(&s)
+	if err != nil {
+		return "", err
+	}
+	return gophercloud.ExtractNextURL(s.Links)
+}
+
+// IsEmpty checks whether a QuotaPage struct is empty.
+func (r QuotaPage) IsEmpty() (bool, error) {
+	if r.StatusCode == 204 {
+		return true, nil
+	}
+
+	is, err := ExtractQuotas(r)
+	return len(is) == 0, err
+}
+
+func ExtractQuotas(r pagination.Page) ([]Quota, error) {
+	var s struct {
+		Quotas []Quota `json:"quotas"`
+	}
+	err := (r.(QuotaPage)).ExtractInto(&s)
+	return s.Quotas, err
 }
 
 // GetResult represents the result of a get operation. Call its Extract
