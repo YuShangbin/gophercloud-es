@@ -35,7 +35,7 @@ func (r QuotaPage) NextPageURL() (string, error) {
 	return gophercloud.ExtractNextURL(s.Links)
 }
 
-// IsEmpty checks whether a FlavorPage struct is empty.
+// IsEmpty checks whether a QuotaPage struct is empty.
 func (r QuotaPage) IsEmpty() (bool, error) {
 	if r.StatusCode == 204 {
 		return true, nil
