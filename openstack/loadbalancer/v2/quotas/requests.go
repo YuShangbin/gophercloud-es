@@ -2,6 +2,7 @@ package quotas
 
 import (
 	"github.com/gophercloud/gophercloud"
+	"github.com/gophercloud/gophercloud/pagination"
 )
 
 // Get returns load balancer Quotas for a project.
@@ -9,6 +10,14 @@ func Get(client *gophercloud.ServiceClient, projectID string) (r GetResult) {
 	resp, err := client.Get(getURL(client, projectID), &r.Body, nil)
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
+}
+
+// List returns load balancer Quotas.
+func List(client *gophercloud.ServiceClient) pagination.Pager {
+	url := getURL(client, "")
+	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
+		return QuotaPage{pagination.LinkedPageBase{PageResult: r}}
+	})
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the

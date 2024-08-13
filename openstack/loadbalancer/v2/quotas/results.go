@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/gophercloud/gophercloud"
+	"github.com/gophercloud/gophercloud/pagination"
 )
 
 type commonResult struct {
@@ -17,6 +18,18 @@ func (r commonResult) Extract() (*Quota, error) {
 	}
 	err := r.ExtractInto(&s)
 	return s.Quota, err
+}
+
+type QuotaPage struct {
+	pagination.LinkedPageBase
+}
+
+func ExtractQuotas(r pagination.Page) ([]Quota, error) {
+	var s struct {
+		Quotas []Quota `json:"quotas"`
+	}
+	err := (r.(QuotaPage)).ExtractInto(&s)
+	return s.Quotas, err
 }
 
 // GetResult represents the result of a get operation. Call its Extract
