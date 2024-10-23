@@ -228,6 +228,11 @@ type Server struct {
 	// contain at most one entry.
 	// New in microversion 2.71
 	ServerGroups *[]string `json:"server_groups"`
+
+	// The hypervisor host name provided by the Nova virt driver. 
+	// For the Ironic driver, it is the Ironic node uuid.
+	//Appears in the response for administrative users only.
+	HostName string `json:"OS-EXT-SRV-ATTR:hypervisor_hostname"`
 }
 
 type AttachedVolume struct {
