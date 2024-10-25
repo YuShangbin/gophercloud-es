@@ -1,6 +1,8 @@
 package volumeattachments
 
 import (
+        "time"
+
 	"github.com/gophercloud/gophercloud"
 )
 
