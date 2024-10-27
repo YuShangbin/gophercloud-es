@@ -22,6 +22,9 @@ type ListOpts struct {
 	// One or more fields to be returned in the response.
 	Fields []string `q:"fields"`
 
+	// Whether to show detailed information about the resource.
+        Detail bool `q:"detail"`
+
 	// Requests a page size of items.
 	Limit int `q:"limit"`
 
