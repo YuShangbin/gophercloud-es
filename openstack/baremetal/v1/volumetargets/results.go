@@ -41,7 +41,7 @@ type VolumeTarget struct {
 
 	// The boot index of the Volume target. “0” indicates that this volume
 	// is used as a boot volume.
-	BootIndex string `json:"boot_index"`
+	BootIndex int `json:"boot_index"`
 
 	// The identifier of the volume. This ID is used by storage interface
 	// to distinguish volumes.
